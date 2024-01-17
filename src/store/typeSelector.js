@@ -11,4 +11,6 @@ class TypeSelector {
   }
 }
 
-export default new TypeSelector()
+const typeSelector = new TypeSelector()
+
+export default typeSelector
