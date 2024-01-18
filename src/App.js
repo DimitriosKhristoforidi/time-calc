@@ -12,7 +12,7 @@ const { Content } = Layout;
 
 const StyledLayout = styled(Layout)`
   background-color: ${geekblue[1]};
-  height: 100vh;
+  min-height: 100vh;
 `
 
 const StyledContent = styled(Content)`
