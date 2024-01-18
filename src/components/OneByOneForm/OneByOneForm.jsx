@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, InputNumber, Space, Typography  } from 'antd';
+import { Button, Form, InputNumber, Space, Row, Col, Card, Statistic  } from 'antd';
 import styled from 'styled-components';
 
 import { calculateOneByOne } from '../../utils/calculateOneByOne'
@@ -26,54 +26,58 @@ export const OneByOneForm = () => {
   }
 
   return (
-    <Space direction='vertical'>
-      <Form onFinish={onFinish} autoComplete="off">
-        <Form.List name="times">
-          {(fields, { add, remove }) => (
-            <>
-              <StyledFormRow direction="vertical">
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} align="baseline">
-                    <StyledFormItem
-                      {...restField}
-                      name={[name, 'hour']}
-                      rules={[{ required: true, message: 'Missing hour' }]}
+    <Row gutter={16}>
+      <Col>
+        <Form onFinish={onFinish} autoComplete="off">
+          <Form.List name="times">
+            {(fields, { add, remove }) => (
+              <>
+                <StyledFormRow direction="vertical">
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space key={key} align="baseline">
+                      <StyledFormItem
+                        {...restField}
+                        name={[name, 'hour']}
+                        rules={[{ required: true, message: 'Missing hour' }]}
+                      >
+                        <InputNumber placeholder="Hour" />
+                      </StyledFormItem>
+                      <StyledFormItem
+                        {...restField}
+                        name={[name, 'minute']}
+                        rules={[{ required: true, message: 'Missing minute' }]}
+                      >
+                        <InputNumber placeholder="Minute" />
+                      </StyledFormItem>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                </StyledFormRow>
+                  <Form.Item>
+                    <StyledButton
+                      block
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
                     >
-                      <InputNumber placeholder="Hour" />
-                    </StyledFormItem>
-                    <StyledFormItem
-                      {...restField}
-                      name={[name, 'minute']}
-                      rules={[{ required: true, message: 'Missing minute' }]}
-                    >
-                      <InputNumber placeholder="Minute" />
-                    </StyledFormItem>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-              </StyledFormRow>
-                <Form.Item>
-                  <StyledButton
-                    block
-                    type="dashed"
-                    onClick={() => add()}
-                    icon={<PlusOutlined />}
-                  >
-                    Add time
-                  </StyledButton>
-                </Form.Item>
-            </>
-          )}
-        </Form.List>
-        <Form.Item>
-          <StyledButton type="primary" htmlType="submit">
-            Submit
-          </StyledButton>
-        </Form.Item>
-      </Form>
-      <Typography.Title level={5}>
-        <pre>{result}</pre>
-      </Typography.Title>
-    </Space>
+                      Add time
+                    </StyledButton>
+                  </Form.Item>
+              </>
+            )}
+          </Form.List>
+          <Form.Item>
+            <StyledButton type="primary" htmlType="submit">
+              Submit
+            </StyledButton>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col span={12}>
+        <Card bordered={false}>
+          <Statistic title="Result" value={result} />
+        </Card>
+      </Col>
+    </Row>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Space, Typography  } from 'antd';
+import { Button, Form, Input, Row, Col, Card, Statistic  } from 'antd';
 import styled from 'styled-components';
 
 import { calculateOneByOne } from '../../utils/calculateOneByOne'
@@ -21,22 +21,28 @@ export const ListForm = () => {
     setResult(calculateOneByOne(list))
   }
   return (
-    <Space direction='vertical'>
-      <Form onFinish={onFinish} autoComplete="off">
-        
-        <Form.Item name="timesList" rules={[{ required: true, message: 'Missing list' }]}>
-          <Input.TextArea placeholder="Times List" />
-        </Form.Item>
-        
-        <Form.Item>
-          <StyledButton type="primary" htmlType="submit">
-            Submit
-          </StyledButton>
-        </Form.Item>
-      </Form>
-      <Typography.Title level={5}>
-        <pre>{result}</pre>
-      </Typography.Title>
-    </Space>
+    <Row gutter={16}>
+      <Col span={12}>
+        <Form onFinish={onFinish} autoComplete="off">
+          <Form.Item name="timesList" rules={[{ required: true, message: 'Missing list' }]}>
+            <Input.TextArea
+              autoSize
+              allowClear
+              placeholder="Times List"
+            />
+          </Form.Item>
+          <Form.Item>
+            <StyledButton type="primary" htmlType="submit">
+              Submit
+            </StyledButton>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col span={12}>
+        <Card bordered={false}>
+          <Statistic title="Result" value={result} />
+        </Card>
+      </Col>
+    </Row>
   )
 }
