@@ -1,23 +1,24 @@
-import React from 'react';
-import { observer } from "mobx-react-lite"
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Segmented } from "antd";
+import { UnorderedListOutlined, AlignRightOutlined } from "@ant-design/icons";
 
-import { Segmented } from 'antd';
-import { UnorderedListOutlined, AlignRightOutlined } from '@ant-design/icons';
-
-import typeSelector from '../../store/typeSelector'
+import { setType } from "../../store/slices/typeSlice";
 
 const options = [
-  {label: 'One-by-one', value: 'oneByOne', icon: <UnorderedListOutlined />},
-  {label: 'List', value: 'list', icon: <AlignRightOutlined />},
-]
+  { label: "One-by-one", value: "one-by-one", icon: <UnorderedListOutlined /> },
+  { label: "List", value: "list", icon: <AlignRightOutlined /> },
+];
 
-export const TypeSelector = observer(() => {
+export const TypeSelector = () => {
+  const type = useSelector((state) => state.type.value);
+  const dispatch = useDispatch();
+
+  const handleCahnge = (type) => {
+    dispatch(setType(type));
+  };
+
   return (
-    <Segmented
-      value={typeSelector.type}
-      options={options}
-      block
-      onChange={(type) => typeSelector.selectType(type)}
-    />
-  )
-})
+    <Segmented value={type} options={options} block onChange={handleCahnge} />
+  );
+};

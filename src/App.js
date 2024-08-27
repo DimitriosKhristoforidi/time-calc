@@ -1,41 +1,49 @@
-import { observer } from 'mobx-react-lite';
-import styled from 'styled-components';
-import { Layout, Divider } from 'antd';
-import { geekblue } from '@ant-design/colors';
+import styled from "styled-components";
+import { Layout, Divider } from "antd";
+import { geekblue } from "@ant-design/colors";
 
-import { TypeSelector } from './components/TypeSelector';
-import { OneByOneForm } from './components/OneByOneForm';
-import { ListForm } from './components/ListForm';
-import typeSelector from './store/typeSelector'
+import { TypeSelector } from "./components/TypeSelector";
+import { OneByOneForm } from "./components/OneByOneForm";
+import { TimeStorage } from "./components/TimeStorage";
+import { ListForm } from "./components/ListForm";
+import { useSelector } from "react-redux";
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
 const StyledLayout = styled(Layout)`
   background-color: ${geekblue[1]};
-  min-height: 100vh;
-`
+  height: 100vh;
+`;
 
 const StyledContent = styled(Content)`
+  height: 100vh;
   padding: 48px 12px;
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-`
+`;
 
-const App = observer(() => {
+const StyledSider = styled(Sider)`
+  height: 100vh;
+  background: white;
+  padding: 24px;
+`;
+
+const App = () => {
+  const type = useSelector((state) => state.type.value);
+
   return (
     <StyledLayout>
       <StyledContent>
         <TypeSelector />
         <Divider />
-        {
-          typeSelector.type === 'oneByOne'
-            ? <OneByOneForm />
-            : <ListForm />
-        }
+        {type === "one-by-one" ? <OneByOneForm /> : <ListForm />}
       </StyledContent>
+      <StyledSider width={300}>
+        <TimeStorage />
+      </StyledSider>
     </StyledLayout>
-  )
-})
+  );
+};
 
-export default App
+export default App;
