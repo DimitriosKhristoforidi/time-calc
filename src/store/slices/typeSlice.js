@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  value: "one-by-one",
+  value: "sum",
 };
 
 export const typeSlice = createSlice({

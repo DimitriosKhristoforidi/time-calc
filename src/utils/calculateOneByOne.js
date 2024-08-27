@@ -2,26 +2,46 @@ export const calculateOneByOne = (times) => {
   let hours = 0;
   let mins = 0;
 
-  for (let i in times) {
-    let { hour, minute } = times[i];
-    hours += +hour;
-    mins += +minute;
-  }
+  const totalMinutes = times.reduce((acc, time) => {
+    const { hour, minute } = time;
+    return acc + hour * 60 + minute;
+  }, 0);
 
-  if (mins > 59) {
-    let minInHour = mins / 60;
-    let fullHourInMin = +Math.floor(minInHour);
-    hours += fullHourInMin;
-    mins = Math.round((minInHour - fullHourInMin) * 60);
+  hours = Math.floor(totalMinutes / 60);
+  mins = totalMinutes % 60;
+
+  if (hours < 10) {
+    hours = `0${hours}`;
   }
 
   if (mins < 10) {
     mins = `0${mins}`;
   }
 
-  if (hours < 10) {
-    hours = `0${hours}`;
+  return `${hours}:${mins}`;
+};
+
+export const calculateOneByOneSubstract = (times) => {
+  let firstTotalMinutes = times[0].hour * 60 + times[0].minute;
+
+  const minutesAfterSubtract = times.slice(1).reduce((acc, time) => {
+    const { hour, minute } = time;
+    return acc - hour * 60 - minute;
+  }, firstTotalMinutes);
+
+  let totalHours =
+    minutesAfterSubtract > 0
+      ? Math.floor(minutesAfterSubtract / 60)
+      : Math.ceil(minutesAfterSubtract / 60);
+  let totalMinutes = Math.abs(minutesAfterSubtract) % 60;
+
+  if (Math.abs(totalHours) < 10) {
+    totalHours = `${totalHours < 0 ? "-" : ""}0${Math.abs(totalHours)}`;
   }
 
-  return `${hours}:${mins}`;
+  if (totalMinutes < 10) {
+    totalMinutes = `0${totalMinutes}`;
+  }
+
+  return `${totalHours}:${totalMinutes}`;
 };

@@ -7,8 +7,15 @@ import { OneByOneForm } from "./components/OneByOneForm";
 import { TimeStorage } from "./components/TimeStorage";
 import { ListForm } from "./components/ListForm";
 import { useSelector } from "react-redux";
+import { SubstractForm } from "./components/SubstractForm";
 
 const { Content, Sider } = Layout;
+
+const VIEWS = {
+  sum: <OneByOneForm />,
+  list: <ListForm />,
+  substract: <SubstractForm />,
+};
 
 const StyledLayout = styled(Layout)`
   background-color: ${geekblue[1]};
@@ -37,7 +44,7 @@ const App = () => {
       <StyledContent>
         <TypeSelector />
         <Divider />
-        {type === "one-by-one" ? <OneByOneForm /> : <ListForm />}
+        {VIEWS[type]}
       </StyledContent>
       <StyledSider width={300}>
         <TimeStorage />
